@@ -1,15 +1,21 @@
-const fs = require('fs');
+// Script 1: extract from MongoDB into JSON.
 const {
     MongoClient,
 } = require('mongodb');
+
+const {
+    checkFileNotExist,
+    saveTo,
+} = require('./util/file');
 
 const user = "test", password = "test";
 const host = "localhost:27017";
 const db = "werewolf";
 
-const output = "./gamelogs.json";
+const output = "./data/gamelogs.json";
 
-MongoClient.connect(`mongodb://${user}:${password}@${host}/${db}?w=1`)
+checkFileNotExist(output)
+.then(()=> MongoClient.connect(`mongodb://${user}:${password}@${host}/${db}?w=1`))
 .then(proc)
 .then(result=>{
     return saveTo(output, JSON.stringify(result));
@@ -69,14 +75,3 @@ function proc(db){
     });
 }
 
-function saveTo(file, content){
-    return new Promise((resolve, reject)=>{
-        fs.writeFile(file, content, 'utf8', err=>{
-            if (err){
-                reject(err);
-            }else{
-                resolve();
-            }
-        });
-    });
-}

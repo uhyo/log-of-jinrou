@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/uhyo/log-of-jinrou#readme",
   "dependencies": {
+    "coffeescript": "^1.12.6",
+    "expand-tilde": "^2.0.2",
     "mongodb": "^2.2.30"
   }
 }
